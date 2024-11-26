@@ -25,23 +25,27 @@ export const columns: ColumnDef<User>[] = [
     enableHiding: false
   },
   {
-    accessorKey: 'name',
-    header: 'NAME'
+    accessorKey: 'country',
+    header: 'Pais'
   },
   {
-    accessorKey: 'company',
-    header: 'COMPANY'
+    accessorKey: 'region',
+    header: 'Regiao'
   },
   {
-    accessorKey: 'role',
-    header: 'ROLE'
+    accessorKey: 'cases',
+    header: 'Casos'
   },
   {
-    accessorKey: 'status',
-    header: 'STATUS'
+    accessorKey: 'deaths',
+    header: 'Mortes'
   },
   {
-    id: 'actions',
-    cell: ({ row }) => <CellAction data={row.original} />
+    accessorKey: 'year',
+    header: 'Ano'
+  },
+  {
+    accessorKey: 'riskLevel',
+    header: 'Risco'
   }
 ];
