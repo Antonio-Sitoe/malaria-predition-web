@@ -1,21 +1,21 @@
-import * as dfd from 'danfojs-node'
+import * as dfd from 'danfojs-node';
 
 export async function processData(path: string) {
   try {
-    const csvFile = await dfd.readCSV(path)
+    const csvFile = await dfd.readCSV(path);
     const csvData = csvFile.loc({
       columns: [
         'Country',
         'Year',
         'No. of cases',
         'No. of deaths',
-        'WHO Region',
-      ],
-    })
+        'WHO Region'
+      ]
+    });
 
-    return csvData
+    return csvData;
   } catch (error) {
-    console.error('Erro ao carregar os dados:', error)
-    return null
+    console.error('Erro ao carregar os dados:', error);
+    return null;
   }
 }
