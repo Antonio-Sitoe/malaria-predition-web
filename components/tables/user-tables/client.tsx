@@ -4,31 +4,43 @@ import { DataTable } from '@/components/ui/data-table';
 import { Heading } from '@/components/ui/heading';
 import { Separator } from '@/components/ui/separator';
 import { columns } from './columns';
-import { useEffect, useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { DataTableSkeleton } from '@/components/ui/data-table-skeleton';
 
 interface ProductsClientProps {}
 
-export const UserClient: React.FC<ProductsClientProps> = () => {
-  const [data, setData] = useState([]);
+async function getDataSet() {
+  const data = await fetch('/api/get-all-data');
+  const json = await data.json();
+  return json?.data;
+}
 
-  useEffect(() => {
-    fetch('/api/get-all-data')
-      .then((response) => response.json())
-      .then((json) => {
-        setData(json.data ? json.data : []);
-      });
-  }, []);
+export const UserClient: React.FC<ProductsClientProps> = () => {
+  const { data, isLoading } = useQuery({
+    queryKey: ['/todos-data'],
+    queryFn: getDataSet
+  });
 
   return (
     <>
       <div className="flex items-start justify-between">
         <Heading
-          title={`Users (${data.length})`}
-          description="Manage users (Client side table functionalities.)"
+          title={`Dados (${data?.length || 0})`}
+          description="Encontre aqui a lista completa de todo dataset de (Malaria)"
         />
       </div>
       <Separator />
-      <DataTable searchKey="country" columns={columns} data={data} />
+      {isLoading ? (
+        <DataTableSkeleton
+          columnCount={3}
+          searchableColumnCount={1}
+          filterableColumnCount={2}
+          cellWidths={['10rem', '40rem', '12rem', '12rem']}
+          shrinkZero
+        />
+      ) : (
+        <DataTable searchKey="country" columns={columns} data={data} />
+      )}
     </>
   );
 };

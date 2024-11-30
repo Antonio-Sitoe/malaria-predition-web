@@ -1,9 +1,10 @@
 import { getCentralValue } from '@/utils/training/get-central-value';
 import { processData } from '@/utils/training/data-processing';
+import { DATASET_PATH } from '@/lib/path-dataset';
 
 export async function GET() {
   try {
-    const malariaDataframe = await processData('utils/training/dataset.csv');
+    const malariaDataframe = await processData(DATASET_PATH);
     const malariaDataList = malariaDataframe?.values.map((row: any) => {
       const cases = getCentralValue(row[2]);
       const deaths = getCentralValue(row[3]);
